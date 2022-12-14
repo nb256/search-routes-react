@@ -1,0 +1,11 @@
+.firstHeader {
+  width: 100%;
+  height: 50px;
+  box-shadow: 0 0 3px #dddddd;
+  border-bottom: 1px solid #dddddd;
+}
+
+.mozioLogo {
+  width: 100%;
+  height: 100%;
+}
