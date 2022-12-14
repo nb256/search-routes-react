@@ -1,0 +1,22 @@
+.container {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.secondHeader {
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 38px;
+  z-index: 5;
+}
