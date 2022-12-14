@@ -19,6 +19,7 @@ export default function CitySelection({
   const [value, setValue] = useState<string | null>(initialValue || null);
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const fetch = useMemo(
     () =>
@@ -43,6 +44,7 @@ export default function CitySelection({
       setOptions(value ? [value] : []);
       return undefined;
     }
+    setLoading(true);
 
     fetch({ input: inputValue }, (results?: SearchCitiesResponse) => {
       if (active) {
@@ -60,6 +62,7 @@ export default function CitySelection({
         }
 
         setOptions(newOptions);
+        setLoading(false);
       }
     });
 
@@ -91,6 +94,7 @@ export default function CitySelection({
         <TextField {...params} label={label} fullWidth required />
       )}
       noOptionsText="Type to search…"
+      loading={loading}
     />
   );
 }
