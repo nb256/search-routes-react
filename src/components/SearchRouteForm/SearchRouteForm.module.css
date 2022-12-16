@@ -1,0 +1,17 @@
+.container {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 310px;
+  margin: 0 auto;
+  margin-top: 47px;
+  border-radius: 10px;
+  background-color: rgb(255 255 255 / 93%);
+  box-shadow: 0 0 3px #dddddd;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 650px;
+  }
+}
