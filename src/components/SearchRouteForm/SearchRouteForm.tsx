@@ -2,21 +2,51 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Stack, TextField, Typography } from "@mui/material";
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 
 import styles from "./SearchRouteForm.module.css";
 import CitiesSelection from "../CitiesSelection/CitiesSelection";
 
 export default function SearchRouteForm() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [dateOfTrip, setDateOfTrip] = useState<Date | null>(null);
   const [passengers, setPassengers] = useState(0);
   const [cities, setCities] = useState<string[]>([]);
   const [dateError, setDateError] = useState(false);
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (cities.filter((city) => city).length > 0) {
+      searchParams.set("cities", cities.join(","));
+    }
+    if (dateOfTrip) {
+      searchParams.set("date", dateOfTrip.toISOString());
+    }
+    if (passengers) {
+      searchParams.set("passengers", passengers.toString());
+    }
+
+    setSearchParams(searchParams);
+  }, [dateOfTrip, passengers, cities, setSearchParams, searchParams]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submit", cities, dateOfTrip, passengers);
+    navigate({
+      pathname: "/results",
+      search: createSearchParams({
+        cities: cities.join(","),
+        date: dateOfTrip ? dateOfTrip.toISOString() : "",
+        passengers: passengers.toString(),
+      }).toString(),
+    });
   };
 
   return (
