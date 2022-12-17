@@ -95,6 +95,7 @@ export default function CitySelection({
       )}
       noOptionsText="Type to search…"
       loading={loading}
+      blurOnSelect
     />
   );
 }
