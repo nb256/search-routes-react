@@ -45,6 +45,10 @@ export default function SearchRouteForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!dateOfTrip) {
+      setDateError(true);
+      return;
+    }
     navigate({
       pathname: "/results",
       search: createSearchParams({
