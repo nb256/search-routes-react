@@ -5,12 +5,20 @@ import CitySelection from "../CitySelection/CitySelection";
 
 export default function CitiesSelection({
   onChange,
+  value,
 }: {
   onChange?: (value: string[]) => void;
+  value?: string[];
 }) {
-  const [originCity, setOriginCity] = useState<string>("");
-  const [intermediateCities, setIntermediateCities] = useState<string[]>([]);
-  const [destinationCity, setDestinationCity] = useState<string>("");
+  const [originCity, setOriginCity] = useState<string>(
+    value?.[0] ? value[0] : ""
+  );
+  const [intermediateCities, setIntermediateCities] = useState<string[]>(
+    value?.slice(1, -1) || []
+  );
+  const [destinationCity, setDestinationCity] = useState<string>(
+    value?.[value.length - 1] ? value[value.length - 1] : ""
+  );
 
   useEffect(() => {
     if (onChange) {
@@ -41,7 +49,11 @@ export default function CitiesSelection({
 
   return (
     <>
-      <CitySelection label="City of origin" onChange={setOriginCity} />
+      <CitySelection
+        label="City of origin"
+        onChange={setOriginCity}
+        initialValue={originCity}
+      />
       <Button variant="text" onClick={handleAddIntermediateCity}>
         Add an intermediate city
       </Button>
@@ -61,6 +73,7 @@ export default function CitiesSelection({
       <CitySelection
         label="City of destination"
         onChange={setDestinationCity}
+        initialValue={destinationCity}
       />
     </>
   );

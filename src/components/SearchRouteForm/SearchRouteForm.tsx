@@ -16,9 +16,15 @@ import CitiesSelection from "../CitiesSelection/CitiesSelection";
 export default function SearchRouteForm() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [dateOfTrip, setDateOfTrip] = useState<Date | null>(null);
-  const [passengers, setPassengers] = useState(0);
-  const [cities, setCities] = useState<string[]>([]);
+  const [dateOfTrip, setDateOfTrip] = useState<Date | null>(
+    searchParams.get("date") ? moment(searchParams.get("date")).toDate() : null
+  );
+  const [passengers, setPassengers] = useState(
+    parseInt(searchParams.get("passengers") || "1")
+  );
+  const [cities, setCities] = useState<string[]>(
+    searchParams.get("cities") ? searchParams.get("cities")!.split(",") : []
+  );
   const [dateError, setDateError] = useState(false);
 
   const navigate = useNavigate();
@@ -55,7 +61,7 @@ export default function SearchRouteForm() {
         <Typography variant="h4" component="h4">
           Search Your Route
         </Typography>
-        <CitiesSelection onChange={setCities} />
+        <CitiesSelection onChange={setCities} value={cities} />
 
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <DateTimePicker
